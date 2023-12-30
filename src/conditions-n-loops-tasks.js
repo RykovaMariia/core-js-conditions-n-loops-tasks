@@ -335,11 +335,47 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
-}
+function getSpiralMatrix(size) {
+  const result = [];
+  let lastRow = size;
+  let lastCol = size;
+  let row = 0;
+  let col = 0;
+  let element = 1;
 
-console.log(getSpiralMatrix(4));
+  for (let i = 0; i < size; i += 1) {
+    result[i] = [];
+  }
+
+  while (row < lastRow && col < lastCol) {
+    for (let i = col; i < lastCol; i += 1) {
+      result[row][i] = element;
+      element += 1;
+    }
+    row += 1;
+    lastCol -= 1;
+
+    for (let i = row; i < lastRow; i += 1) {
+      result[i][lastCol] = element;
+      element += 1;
+    }
+
+    for (let i = lastCol - 1; i >= col; i -= 1) {
+      result[lastRow - 1][i] = element;
+      element += 1;
+    }
+
+    lastRow -= 1;
+
+    for (let i = lastRow - 1; i >= row; i -= 1) {
+      result[i][col] = element;
+      element += 1;
+    }
+
+    col += 1;
+  }
+  return result;
+}
 
 /**
  * Rotates a matrix by 90 degrees clockwise in place.
