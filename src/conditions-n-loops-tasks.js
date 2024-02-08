@@ -456,8 +456,8 @@ function quickSort(array, left, right) {
   return array;
 }
 
-function sortByAsc(arr) {
-  return quickSort(arr, 0, arr.length - 1);
+function sortByAsc(arr, left = 0, right = arr.length - 1) {
+  return quickSort(arr, left, right);
 }
 
 /**
@@ -522,8 +522,42 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+
+function getNearestBigger(number) {
+  const arr = [];
+  if (arr.length === 1) {
+    return number;
+  }
+  for (let i = 0; i < `${number}`.length; i += 1) {
+    arr.push(+`${number}`[i]);
+  }
+  let index = arr.length - 1;
+
+  for (let i = index - 1; i >= 0; i -= 1) {
+    if (arr[i] < arr[i + 1]) {
+      index = i;
+      break;
+    }
+  }
+  sortByAsc(arr, index + 1, arr.length - 1);
+
+  if (index < arr.length - 1) {
+    for (let i = index + 1; i < arr.length; i += 1) {
+      if (arr[i] > arr[index]) {
+        [arr[i], arr[index]] = [arr[index], arr[i]];
+        break;
+      }
+    }
+  }
+
+  sortByAsc(arr, index + 1, arr.length - 1, true);
+
+  let str = '';
+  for (let i = 0; i < arr.length; i += 1) {
+    str += arr[i];
+  }
+
+  return +str;
 }
 
 module.exports = {
